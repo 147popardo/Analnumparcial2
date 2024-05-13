@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcial Anal Num</title>
+</head>
+<body>
+    <h1>Segundo parcial Analisis Numerico</h1>
+    <h2>Problema para 3 barcazas</h2>
+
+    <button onclick="resolverEcuacion3()">Resolver</button>
+    <h2>Resultados</h2>
+    <p id="resultado3"></p>
+
+    <h2>Problema para 5 barcazas</h2>
+    <p>Al tener un sistema con mas incognitas que ecuaciones, resulta en infinitas soluciones, entonces decidimos resolver estableciendo </p>
+    <p>dos valores arbitrarios en dos variables, para de esta manera tener un sistema de tres ecuaciones y tres incognitas.</p>
+    <p>No obstante, necesitamos minimizar la cantidad de combustible, por lo que aplicamos un modelo de programacion lineal</p>
+    <p>para poder determinar la cantidad minima de viajes y cuantos corresponden por barcaza.</p>
+
+    <button onclick="resolverEcuaciones()">Resolver</button>
+    <h2>Resultados</h2>
+    <p id="resultado"></p>
+
+    <script>
+        function resolverEcuaciones() {
+            const t = parseFloat(0);
+            const w = parseFloat(27.301587);
+
+            // Calcular x, z, y utilizando las fórmulas despejadas
+            const x = (-2 * (31 * t + 18 * w - 1075)) / 43;
+            const z = (5 * (7 * t + 11 * w + 258)) / 43;
+            const y = (1720 - t - 63 * w) / 43;
+
+            // Mostrar los resultados
+            document.getElementById('resultado').innerHTML = `
+                Barcaza 1 = ${x.toFixed(2)}<br>
+                Barcaza 2 = ${y.toFixed(2)}<br>
+                Barcaza 3 = ${z.toFixed(2)}<br>
+                Barcaza 4 = 0.00<br>
+                Barcaza 5 = 27.301587<br>
+                Total minimo de viajes= 120
+            `;
+        }
+    </script>
+    <script>
+        function resolverEcuacion3() {
+            const t = parseFloat(0);
+            const w = parseFloat(0);
+
+            // Calcular x, z, y utilizando las fórmulas despejadas
+            const x = (-2 * (31 * t + 18 * w - 1075)) / 43;
+            const z = (5 * (7 * t + 11 * w + 258)) / 43;
+            const y = (1720 - t - 63 * w) / 43;
+
+            // Mostrar los resultados
+            document.getElementById('resultado3').innerHTML = `
+                Barcaza 1 = ${x.toFixed(2)} viajes<br>
+                Barcaza 2 = ${y.toFixed(2)} viajes<br>
+                Barcaza 3 = ${z.toFixed(2)} viajes<br>
+            `;
+        }
+    </script>
+</body>
+</html>
