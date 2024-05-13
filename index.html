@@ -9,15 +9,15 @@
     <h1>Segundo parcial Analisis Numerico</h1>
     <h2>Problema para 3 barcazas</h2>
 
-    <button onclick="resolverEcuacion3()">Resolver</button>
+    <button onclick="mostrar()">Resolver</button>
     <h2>Resultados</h2>
     <p id="resultado3"></p>
 
     <h2>Problema para 5 barcazas</h2>
     <p>Al tener un sistema con mas incognitas que ecuaciones, resulta en infinitas soluciones, entonces decidimos resolver estableciendo </p>
     <p>dos valores arbitrarios en dos variables, para de esta manera tener un sistema de tres ecuaciones y tres incognitas.</p>
-    <p>No obstante, necesitamos minimizar la cantidad de combustible, por lo que aplicamos un modelo de programacion lineal (el codigo</p>
-    <p>del modelo se encuentra en el repositorio) para poder determinar la cantidad minima de viajes y cuantos corresponden por barcaza.</p>
+    <p>No obstante, necesitamos minimizar la cantidad de combustible, por lo que aplicamos un modelo de programacion lineal</p>
+    <p>para poder determinar la cantidad minima de viajes y cuantos corresponden por barcaza.</p>
 
     <button onclick="resolverEcuaciones()">Resolver</button>
     <h2>Resultados</h2>
@@ -45,22 +45,52 @@
         }
     </script>
     <script>
-        function resolverEcuacion3() {
-            const t = parseFloat(0);
-            const w = parseFloat(0);
+        function resolverEcuacion3(matriz, resultados) {
+            let n = resultados.length;
 
-            // Calcular x, z, y utilizando las fórmulas despejadas
-            const x = (-2 * (31 * t + 18 * w - 1075)) / 43;
-            const z = (5 * (7 * t + 11 * w + 258)) / 43;
-            const y = (1720 - t - 63 * w) / 43;
+            for (let i = 0; i < n; i++) {
+                // Escalar la fila actual para que el elemento diagonal sea 1
+                let factor = matriz[i][i];
+                for (let j = 0; j < n; j++) {
+                    matriz[i][j] = matriz[i][j] / factor;
+                }
+                resultados[i] = resultados[i] / factor;
 
-            // Mostrar los resultados
-            document.getElementById('resultado3').innerHTML = `
-                Barcaza 1 = ${x.toFixed(2)} viajes<br>
-                Barcaza 2 = ${y.toFixed(2)} viajes<br>
-                Barcaza 3 = ${z.toFixed(2)} viajes<br>
-            `;
+                // Hacer ceros en el resto de la columna
+                for (let k = 0; k < n; k++) {
+                    if (k != i) {
+                        factor = matriz[k][i];
+                        for (let j = 0; j < n; j++) {
+                            matriz[k][j] -= factor * matriz[i][j];
+                        }
+                        resultados[k] -= factor * resultados[i];
+                    }
+                }
+            }
+
+            return resultados;
         }
+
+        // Definir la matriz de coeficientes y el vector de resultados
+        let coeficientes = [
+            [50, 20, 40],
+            [30, 50, 30],
+            [40, 50, 60]
+        ];
+        let resultados = [4500, 4400, 5800];
+
+        // Resolver el sistema
+        let solucion = resolverEcuacion3(coeficientes, resultados);
+
+        // Mostrar el resultado
+        function mostrar(){
+            document.getElementById('resultado3').innerText = 'Solución: Barcaza 1 = ' + solucion[0].toFixed(2) + 
+                                                            ', Barcaza 2 = ' + solucion[1].toFixed(2) + 
+                                                            ', Barcaza 3 = ' + solucion[2].toFixed(2);
+                                                        }
     </script>
+</body>
+</html>
+
 </body>
 </html>
